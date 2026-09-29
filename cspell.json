@@ -1,0 +1,4 @@
+{
+  "language": "en,fa",
+  "ignoreRegExpList": ["[\\u0600-\\u06FF]+"]
+}

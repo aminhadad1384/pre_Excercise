@@ -3,17 +3,23 @@
 import React, { useState } from "react";
 import { ShoppingCart, ShoppingBag, Search, Menu, X } from "lucide-react";
 export default function Header() {
-  let [searchBoxIsOpen, setSearchBoxIsOpen] = useState(false);
-  let [hamburgaryMenuIsOpen, setHamburgaryMenuIsOpen] = useState(true);
+  const [searchBoxIsOpen, setSearchBoxIsOpen] = useState(false);
+  const [setHamburgerMenuIsOpen, hamburgerMenuIsOpen] = useState(true);
+  const navLinks = [
+    { label: "خانه", href: "#" },
+    { label: "محصولات", href: "#" },
+    { label: "درباره ما", href: "#" },
+    { label: "تماس با ما", href: "#" },
+  ];
   return (
-    <div className="w-full  flex  items-center justify-between px-3  py-2">
+    <header className="w-full  flex  items-center justify-between px-3  py-2">
       <div className="flex gap-1.5">
         <ShoppingCart />
         <h2>فروشگاه</h2>
       </div>
-      <div className={`bg-accent mx-24 sm:flex`}>
+      <div className={`hidden mx-24 sm:flex`}>
         <ul
-          className={`flex gap-6 text-fg  text-[19px] *:hover:text-primary cursor-pointer ${hamburgaryMenuIsOpen ? "flex flex-col absolute" : "hidden"}`}
+          className={` gap-6 text-fg  text-[19px] *:hover:text-primary cursor-pointer sm:flex`}
         >
           <li>خانه</li>
           <li>محصولات</li>
@@ -24,33 +30,38 @@ export default function Header() {
       <div
         className={`flex items-center  sm:gap-7 ${searchBoxIsOpen ? "gap-2" : "gap-5"}`}
       >
-        <Search
-          className={`sm:hidden ${searchBoxIsOpen ? "hidden" : ""}`}
-          onClick={() => setSearchBoxIsOpen(true)}
-        />
+        <button onClick={() => setSearchBoxIsOpen(true)}>
+          <Search className={`sm:hidden ${searchBoxIsOpen ? "hidden" : ""}`} />
+        </button>
+        <label htmlFor="search" className="sr-only">
+          جستجوی محصول
+        </label>
+
         <input
           dir="rtl"
-          className={`${searchBoxIsOpen ? "w-64" : "hidden"} rounded border-card-border border-2 bg-bg-app px-0.5 py-1 sm:flex`}
+          className={`${searchBoxIsOpen ? "w-52" : "hidden"} rounded border-card-border border-2 bg-bg-app px-1 py-1 sm:flex w-64`}
           type="text"
           placeholder="جستجو..."
         />
-        <div className="relative">
+        {/* در بخش افزودن به سبد خرید آن کلیکش کامل بشه : */}
+        <button className="relative">
           <ShoppingBag className={`${searchBoxIsOpen ? "hidden" : ""}`} />
           <div
             className={`${searchBoxIsOpen ? "hidden " : "absolute"}  bg-danger text-white text-[12px] text-center rounded-full w-3.5 h-3.5  bottom-4.5 -right-2 `}
           >
             2
           </div>
-        </div>
+        </button>
         {searchBoxIsOpen ? (
-          <X className="sm:hidden" onClick={() => setSearchBoxIsOpen(false)} />
+          <button onClick={() => setSearchBoxIsOpen(false)}>
+            <X className="sm:hidden" />
+          </button>
         ) : (
-          <Menu
-            className="sm:hidden"
-            onClick={() => setHamburgaryMenuIsOpen(true)}
-          />
+          <button onClick={() => setHamburgerMenuIsOpen(true)}>
+            <Menu className="sm:hidden" />
+          </button>
         )}
       </div>
-    </div>
+    </header>
   );
 }
